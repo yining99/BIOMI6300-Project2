@@ -1,7 +1,5 @@
 # BIOMI6300-Project2
 
-------------------------------------------------------------------------
-
 ## About this project:
 
 ### Project name
@@ -23,8 +21,6 @@ Study of gut microbiota in formula-fed infants consuming meat vs. dairy-based co
     -   species richness between two groups
     -   16s rRNA gene abundance
     -   beta diversity
-
-------------------------------------------------------------------------
 
 ## What are included in this repo:
 
