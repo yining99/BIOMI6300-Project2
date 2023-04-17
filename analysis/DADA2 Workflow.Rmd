@@ -1,0 +1,41 @@
+---
+title: "DADA2 Workflow"
+author: "Yining Sun"
+date: "2023-04-17"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+
+# Let's atrat! Sew workdiir, source code and load packages!
+```{r prep-to-start}
+# be in the right place
+setwd("/local/workdir/ys636/BIOMI6300-Project2")
+
+# source functions.R
+source("/local/workdir/ys636/BIOMI6300-Project2/code/functions.R")
+
+# load packages with pacman
+pacman::p_load(dada2, tidyverse, phyloseq, patchwork, Biostrings, install = FALSE)
+
+# check dada2 version
+packageVersion("dada2")
+```
+
+
+# Set path
+```{r set-path}
+
+# set paths for meat and dairy folders of gzipped files
+path_meat <- ("/local/workdir/ys636/BIOMI6300-Project2/data/meat")
+path_dairy <- ("/local/workdir/ys636/BIOMI6300-Project2/data/dairy")
+
+# check path
+list.files(path_meat)  # 16 fastq.gz files, looks good!
+list.files(path_dairy)  # 16 fastq.gz files, looks good, too!
+
+```
+
+
+
