@@ -97,12 +97,12 @@ sample_dairy
 
 # create variables to hold file names
 ## Meat group
-filtered_F_reads_meat <- file.path(path_meat, "filtered", paste0(sample_meat, "_1.fastq.gz"))
-filtered_R_reads_meat <- file.path(path_meat, "filtered", paste0(sample_meat, "_2.fastq.gz"))
+filtered_F_reads_meat <- file.path(path_meat, "filtered", paste0(sample_meat, "_1_filtered.fastq.gz"))
+filtered_R_reads_meat <- file.path(path_meat, "filtered", paste0(sample_meat, "_2_filtered.fastq.gz"))
 
 ## Dairy group
-filtered_F_reads_dairy <- file.path(path_dairy, "filtered", paste0(sample_dairy, "_1.fastq.gz"))
-filtered_R_reads_dairy <- file.path(path_dairy, "filtered", paste0(sample_dairy, "_2.fastq.gz"))
+filtered_F_reads_dairy <- file.path(path_dairy, "filtered", paste0(sample_dairy, "_1_filtered.fastq.gz"))
+filtered_R_reads_dairy <- file.path(path_dairy, "filtered", paste0(sample_dairy, "_2_filtered.fastq.gz"))
 
 ```
 
