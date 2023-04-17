@@ -8,7 +8,7 @@ editor_options:
 ---
 
 
-# Let's atrat! Sew workdiir, source code and load packages!
+# Let's atrat! Set workdir, source code and load packages!
 ```{r prep-to-start}
 # be in the right place
 setwd("/local/workdir/ys636/BIOMI6300-Project2")
@@ -193,4 +193,30 @@ plotErrors(err_forward_reads_dairy, nominalQ = TRUE)
 plotErrors(err_reverse_reads_dairy, nominalQ = TRUE)
 
 ```
+
+
+# Infer ASVs on the forward and reverse seqs with DADA2
+```{r infer-ASVs}
+# Meat group
+## run dada2 on the forward reads
+dada_F_meat <- dada(filtered_F_reads_meat, err = err_forward_reads_meat, multithread =  TRUE)
+dada_F_meat
+## run dada2 on the reverse reads
+dada_R_meat <- dada(filtered_R_reads_meat, err = err_reverse_reads_meat, multithread =  TRUE)
+dada_R_meat
+
+### For each sample in the meat group, they all had over 100 sequence variants inferred.
+
+# Dairy group
+## run dada2 on the forward reads
+dada_F_dairy <- dada(filtered_F_reads_dairy, err = err_forward_reads_dairy, multithread =  TRUE)
+dada_F_dairy
+## run dada2 on the reverse reads
+dada_R_dairy <- dada(filtered_R_reads_dairy, err = err_reverse_reads_dairy, multithread =  TRUE)
+dada_R_dairy
+
+### For sample No.2,5,6,8 in the dairy group, they only had less than 20 sequence variants inferred, which was surprising, especially compared to numbers of corresponding forward reads.
+
+```
+
 
