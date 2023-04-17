@@ -85,3 +85,51 @@ R_Qual_plot_dairy
 ```
 
 
+# Modify file names for the forward and reverse filtered reads
+```{r variables-trimmed-reads}
+
+# Create characters for trimmed reads 
+sample_meat <- scan(file = "/local/workdir/ys636/BIOMI6300-Project2/data/meat.txt", what = "character")
+sample_meat
+
+sample_dairy <- scan(file = "/local/workdir/ys636/BIOMI6300-Project2/data/dairy.txt", what = "character")
+sample_dairy
+
+# create variables to hold file names
+## Meat group
+filtered_F_reads_meat <- file.path(path_meat, "filtered", paste0(sample_meat, "_1.fastq.gz"))
+filtered_R_reads_meat <- file.path(path_meat, "filtered", paste0(sample_meat, "_2.fastq.gz"))
+
+## Dairy group
+filtered_F_reads_dairy <- file.path(path_dairy, "filtered", paste0(sample_dairy, "_1.fastq.gz"))
+filtered_R_reads_dairy <- file.path(path_dairy, "filtered", paste0(sample_dairy, "_2.fastq.gz"))
+
+```
+
+
+# Filter and trim the raw reads!!
+```{r filter-and-trim}
+
+# Meat group
+filtered_out_meat <- filterAndTrim(F_reads_meat, filtered_F_reads_meat, 
+                              R_reads_meat, filtered_R_reads_meat,
+                              trimRight = c(90, 100),
+                              maxN = 0, maxEE = c(1,1), truncQ = 2, 
+                              rm.phix = TRUE, compress = TRUE, 
+                              multithread = TRUE)
+## kept the first 200-210 bases
+
+
+# Dairy group
+filtered_out_dairy <- filterAndTrim(F_reads_dairy, filtered_F_reads_dairy, 
+                              R_reads_dairy, filtered_R_reads_dairy,
+                              trimRight = c(100, 110),
+                              maxN = 0, maxEE = c(1,1), truncQ = 2, 
+                              rm.phix = TRUE, compress = TRUE, 
+                              multithread = TRUE)
+## kept the first 190-200 bases
+
+
+```
+
+
