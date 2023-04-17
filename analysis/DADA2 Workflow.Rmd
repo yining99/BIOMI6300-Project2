@@ -64,12 +64,24 @@ R_reads_dairy <- sort(list.files(path_dairy, pattern = "_2.fastq.gz",
 # Meat group
 ## Forward
 F_Qual_plot_meat <- plotQualityProfile(F_reads_meat)
-F_Qual_plot_meat
-# Reverse
+F_Qual_plot_meat                      ### The first 190-200 bases had quality scores over 20
+## Reverse
 R_Qual_plot_meat <- plotQualityProfile(R_reads_meat)
-R_Qual_plot_meat
+R_Qual_plot_meat                      ### The first 160 bases had quality scores over 20
 
+# Dairy group
+## Forward
+F_Qual_plot_dairy <- plotQualityProfile(F_reads_dairy)
+F_Qual_plot_dairy             
+### The last 4 samples' first 200-210 bases had quality scores over 20, the first 4 samppels looked good with all reads
 
+## Reverse
+R_Qual_plot_dairy <- plotQualityProfile(R_reads_dairy)
+R_Qual_plot_dairy             
+### The last 4 samples' first 160 bases had quality scores over 20, the first 4 samppels looked good with all reads
+
+### based on the quality plots of all the 16 samples from both groups, I decided to set the quality score cutoff as 20, rather than 30.
 
 ```
+
 
