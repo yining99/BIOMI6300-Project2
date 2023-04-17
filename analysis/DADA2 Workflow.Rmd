@@ -133,3 +133,26 @@ filtered_out_dairy <- filterAndTrim(F_reads_dairy, filtered_F_reads_dairy,
 ```
 
 
+# Plot the quality of filtered and trimmed reads for both groups
+```{r QualPlot-trim}
+
+# Meat group
+## forward
+filtered_F_Qual_plot_meat <- plotQualityProfile(filtered_F_reads_meat)
+filtered_F_Qual_plot_meat    
+## reverse
+filtered_R_Qual_plot_meat <- plotQualityProfile(filtered_R_reads_meat)
+filtered_R_Qual_plot_meat  
+
+
+# Dairy group
+## forward
+filtered_F_Qual_plot_dairy <- plotQualityProfile(filtered_F_reads_dairy)
+filtered_F_Qual_plot_dairy    
+## reverse
+filtered_R_Qual_plot_dairy <- plotQualityProfile(filtered_R_reads_dairy)
+filtered_R_Qual_plot_dairy  
+
+```
+
+
