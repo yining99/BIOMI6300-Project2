@@ -37,5 +37,23 @@ list.files(path_dairy)  # 16 fastq.gz files, looks good, too!
 
 ```
 
+# Create variables for forward and reverse reads
+```{r F-and-R-variables}
+#R1 is forward, R2 is reverse
+
+# F and R variables for MEAT group
+F_reads_meat <- sort(list.files(path_meat, pattern = "_1.fastq.gz",
+                                 full.names = TRUE))
+
+R_reads_meat <- sort(list.files(path_meat, pattern = "_2.fastq.gz",
+                                 full.names = TRUE))
+
+# F and R variables for Dairy group
+F_reads_dairy <- sort(list.files(path_dairy, pattern = "_1.fastq.gz",
+                                 full.names = TRUE))
+
+R_reads_dairy <- sort(list.files(path_dairy, pattern = "_2.fastq.gz",
+                                 full.names = TRUE))
+```
 
 
