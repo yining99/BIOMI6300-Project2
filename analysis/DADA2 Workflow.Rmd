@@ -57,3 +57,19 @@ R_reads_dairy <- sort(list.files(path_dairy, pattern = "_2.fastq.gz",
 ```
 
 
+# Quality plot of raw reads
+```{r QualPlot-untrimmed}
+# show the quality of each base on the reads of all the 8 samples in both groups
+
+# Meat group
+## Forward
+F_Qual_plot_meat <- plotQualityProfile(F_reads_meat)
+F_Qual_plot_meat
+# Reverse
+R_Qual_plot_meat <- plotQualityProfile(R_reads_meat)
+R_Qual_plot_meat
+
+
+
+```
+
