@@ -153,6 +153,44 @@ filtered_F_Qual_plot_dairy
 filtered_R_Qual_plot_dairy <- plotQualityProfile(filtered_R_reads_dairy)
 filtered_R_Qual_plot_dairy  
 
+
+### After this step, the reads for each sample in both groups looked nice and neat - all bases' quality score over 20
+
+### Proceed to learn errors
+
 ```
 
+# Put QualPlots of before and after filterAndtrim together
+```{r QualPlot-before-and-after-trim}
+# Meat group
+(F_Qual_plot_meat+R_Qual_plot_meat)/(filtered_F_Qual_plot_meat+filtered_R_Qual_plot_meat)
+
+# Dairy group
+(F_Qual_plot_dairy+R_Qual_plot_dairy)/(filtered_F_Qual_plot_dairy+filtered_R_Qual_plot_dairy)
+
+```
+
+
+# Error model
+```{r learn-errors}
+
+# Meat group
+err_forward_reads_meat <- learnErrors(filtered_F_reads_meat, multithread = TRUE)
+err_reverse_reads_meat <- learnErrors(filtered_R_reads_meat, multithread = TRUE)
+
+# Dairy group
+err_forward_reads_dairy <- learnErrors(filtered_F_reads_dairy, multithread = TRUE)
+err_reverse_reads_dairy <- learnErrors(filtered_R_reads_dairy, multithread = TRUE)
+
+
+# plot the errors
+# Meat group
+plotErrors(err_forward_reads_meat, nominalQ = TRUE)
+plotErrors(err_reverse_reads_meat, nominalQ = TRUE)
+
+# Dairy group
+plotErrors(err_forward_reads_dairy, nominalQ = TRUE)
+plotErrors(err_reverse_reads_dairy, nominalQ = TRUE)
+
+```
 
