@@ -8,7 +8,7 @@ editor_options:
 ---
 
 
-# Let's atrat! Set workdir, source code and load packages!
+# Let's strat! Set workdir, source code and load packages!
 ```{r prep-to-start}
 # be in the right place
 setwd("/local/workdir/ys636/BIOMI6300-Project2")
@@ -113,21 +113,21 @@ filtered_R_reads_dairy <- file.path(path_dairy, "filtered", paste0(sample_dairy,
 # Meat group
 filtered_out_meat <- filterAndTrim(F_reads_meat, filtered_F_reads_meat, 
                               R_reads_meat, filtered_R_reads_meat,
-                              trimRight = c(90, 100),
-                              maxN = 0, maxEE = c(1,1), truncQ = 2, 
+                              truncLen = 0, trimRight = 100,
+                              maxN = 0, truncQ = 2, 
                               rm.phix = TRUE, compress = TRUE, 
                               multithread = TRUE)
-## kept the first 200-210 bases
+## kept the first 200 bases in forward reads and the first 200 bases in reverse reads
 
 
 # Dairy group
 filtered_out_dairy <- filterAndTrim(F_reads_dairy, filtered_F_reads_dairy, 
                               R_reads_dairy, filtered_R_reads_dairy,
-                              trimRight = c(100, 110),
-                              maxN = 0, maxEE = c(1,1), truncQ = 2, 
+                              trimRight = 50,
+                              maxN = 0, truncQ = 2, 
                               rm.phix = TRUE, compress = TRUE, 
                               multithread = TRUE)
-## kept the first 190-200 bases
+## kept the first 250 bases for both forward and reverse reads
 
 
 ```
@@ -218,5 +218,65 @@ dada_R_dairy
 ### For sample No.2,5,6,8 in the dairy group, they only had less than 20 sequence variants inferred, which was surprising, especially compared to numbers of corresponding forward reads.
 
 ```
+
+
+# Merge forward and reverse ASVs
+```{r merge-FandR-ASVs}
+
+# Meat group
+merged_amplicons_meat <- mergePairs(dada_F_meat, filtered_F_reads_meat,
+                               dada_R_meat, filtered_R_reads_meat,
+                               verbose = TRUE, justConcatenate = TRUE)
+
+# Dairy group
+merged_amplicons_dairy <- mergePairs(dada_F_dairy, filtered_F_reads_dairy,
+                               dada_R_dairy, filtered_R_reads_dairy,
+                               verbose = TRUE, justConcatenate = TRUE)
+
+
+### Attention!!!
+### added 'justConcatenate = TRUE' in order to have more merged pairs. 
+### If not adding this condition, there will be no or few merged pairs for later analysis. 
+### reason: this study sequenced V3 & V4 regions, not only one V region
+### so the sequences could be longer than those we did in class.
+### Will keep an eye for this in later analysis!
+
+
+## Evaluate the output
+# typeof(merged_amplicons_meat)
+# merged_amplicons_meat[1]
+# length(merged_amplicons_meat)
+# names(merged_amplicons_meat)
+
+
+```
+
+
+# Generate a count table
+```{r count-tab}
+# Meat group
+seqtab_meat <- makeSequenceTable(merged_amplicons_meat)
+class(seqtab_meat) ### "matrix" "array"
+typeof(seqtab_meat) ### "integer"
+dim(seqtab_meat) ### 8 rows, 28388 columns
+View(seqtab_meat)
+
+
+# Dairy group
+seqtab_dairy <- makeSequenceTable(merged_amplicons_dairy)
+class(seqtab_dairy) ### "matrix" "array"
+typeof(seqtab_dairy) ### "integer"
+dim(seqtab_dairy) ### 8 rows, 25695 rows
+View(seqtab_dairy)
+
+
+### for both groups' seqtabs, each sequence only exists in one sample.
+### for example, "1000" reads of sequence1 in sample1, but 0" reads in sample2-8.
+
+```
+
+
+
+
 
 
