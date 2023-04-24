@@ -252,7 +252,7 @@ merged_amplicons_dairy <- mergePairs(dada_F_dairy, filtered_F_reads_dairy,
 ```
 
 
-# Generate a count table
+# Generate count tables
 ```{r count-tab}
 # Meat group
 seqtab_meat <- makeSequenceTable(merged_amplicons_meat)
@@ -273,9 +273,40 @@ View(seqtab_dairy)
 ### for both groups' seqtabs, each sequence only exists in one sample.
 ### for example, "1000" reads of sequence1 in sample1, but 0" reads in sample2-8.
 
+
+# inspect the distribution of sequence lengths of all ASVs in dataset
+table(nchar(getSequences(seqtab_meat))) 
+### 409 410 411 412
+### 188 82  13288 14830
+
+table(nchar(getSequences(seqtab_dairy)))
+### 507 508 509 510    511    512
+### 99  136  24 11496  13368  572
+
 ```
 
 
+# Check and remove for Chimeras (Bimeras)
+```{r check-chimeras}
+
+# identify and remove chimeras
+seqtab_nochim_meat <- removeBimeraDenovo(seqtab_meat, verbose = TRUE)  # 27087 chimeras removed
+#################
+seqtab_nochim_dairy <- removeBimeraDenovo(seqtab_dairy, verbose = TRUE) # 24073 chimeras removed
+
+
+# what proportion of counts were removed?
+chim_check_meat <- sum(seqtab_nochim_meat)/sum(seqtab_meat) # 0.4611885
+frac_removed_meat <- (1-chim_check_meat)*100 # 53.88% of counts were removed from meat group
+#################
+chim_check_dairy <- sum(seqtab_nochim_dairy)/sum(seqtab_dairy) # 0.6205842
+frac_removed_dairy <- (1-chim_check_dairy)*100 # 37.94% of counts were removed from dairy group
+
+
+### 53.88% of counts were chimeras and removed from meat group.
+### 37.94% of counts were chimeras and removed from dairy group.
+
+```
 
 
 
