@@ -310,4 +310,91 @@ frac_removed_dairy <- (1-chim_check_dairy)*100 # 37.94% of counts were removed f
 
 
 
+# Track the sequences through the pipeline
+```{r seq-track}
+
+# generate a little function to identify number seqs
+getN <- function(x) sum(getUniques(x))
+
+# make the table to check the seqs
+## Meat group
+track_meat <- cbind(filtered_out_meat,
+               sapply(dada_F_meat, getN),
+               sapply(dada_R_meat, getN),
+               sapply(merged_amplicons_meat, getN),
+               rowSums(seqtab_nochim_meat))
+
+head(track_meat)
+
+# change column names
+colnames(track_meat) <- c("input", "filtered", "denoisedF", "denoisedR", "merged", "nochim")
+
+head(track_meat)
+
+rownames(track_meat) <- sample_meat
+
+track_meat
+
+##############
+## Dairy group
+track_dairy <- cbind(filtered_out_dairy,
+               sapply(dada_F_dairy, getN),
+               sapply(dada_R_dairy, getN),
+               sapply(merged_amplicons_dairy, getN),
+               rowSums(seqtab_nochim_dairy))
+
+head(track_dairy)
+
+# change column names
+colnames(track_dairy) <- c("input", "filtered", "denoisedF", "denoisedR", "merged", "nochim")
+
+head(track_dairy)
+
+rownames(track_dairy) <- sample_dairy
+
+track_dairy
+```
+
+
+
+# generate a plot to track the reads through our DADA2 pipeline
+```{r track-plot}
+# Meat group
+track_meat %>%
+  as.data.frame() %>%
+  rownames_to_column(var = "names") %>%
+  pivot_longer(input:nochim, names_to = "read_type", values_to = "num_reads") %>%
+  make_MA_metadata() %>%
+  mutate(read_type = fct_relevel(read_type, "input", "filtered", "denoisedF", "denoisedR",
+                                 "merged", "nochim")) %>%
+  ggplot(aes(x = read_type, y = num_reads, fill = read_type)) + 
+  facet_grid(~fraction) +
+  geom_line(aes(group = names), color = "red") +
+  geom_point(shape = 21, size = 3, alpha = 0.8) +
+  scale_fill_brewer(palette = "Spectral") +
+  theme_bw() +
+  labs(x = "Filtering Step", y = "Number of Sequences") +
+  theme(legend.position = "bottom", legend.title = element_blank(),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+# Dairy group
+track_dairy %>%
+  as.data.frame() %>%
+  rownames_to_column(var = "names") %>%
+  pivot_longer(input:nochim, names_to = "read_type", values_to = "num_reads") %>%
+  make_MA_metadata() %>%
+  mutate(read_type = fct_relevel(read_type, "input", "filtered", "denoisedF", "denoisedR",
+                                 "merged", "nochim")) %>%
+  ggplot(aes(x = read_type, y = num_reads, fill = read_type)) + 
+  facet_grid(~fraction) +
+  geom_line(aes(group = names), color = "red") +
+  geom_point(shape = 21, size = 3, alpha = 0.8) +
+  scale_fill_brewer(palette = "Spectral") +
+  theme_bw() +
+  labs(x = "Filtering Step", y = "Number of Sequences") +
+  theme(legend.position = "bottom", legend.title = element_blank(),
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+        
+```
+
 
