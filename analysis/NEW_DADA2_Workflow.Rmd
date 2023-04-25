@@ -200,4 +200,17 @@ table(nchar(getSequences(seqtab)))
 ```
 
 
+# Check and remove for Chimeras (Bimeras)
+```{r check-chimeras}
+
+# identify and remove chimeras
+seqtab_nochim <- removeBimeraDenovo(seqtab, verbose = TRUE)  
+### Identified 42953 bimeras out of 45935 input sequences.
+
+chim_check <- sum(seqtab_nochim)/sum(seqtab)*100 # 58.2609% of counts were not chimeras.
+frac_removed <- (1-chim_check)*100 ### 41.73903% of counts were chimeras and removed.
+
+```
+
+
 
