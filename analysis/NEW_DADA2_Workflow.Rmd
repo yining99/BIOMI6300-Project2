@@ -116,5 +116,76 @@ filtered_out_F <- filterAndTrim(F_reads, filtered_F_reads_only,
                               multithread = TRUE)
 
 
+### annotation: when doing both forward and reverse reads, there might be no merged pairs.
+### if allowing concatenation, there would be "N"s, 
+### which are not acceptable by AssignSpecies function
+
 ```
+
+
+# Error model
+```{r learn-errors}
+
+# learn errors
+err_forward_reads <- learnErrors(filtered_F_reads, multithread = TRUE)
+err_reverse_reads <- learnErrors(filtered_R_reads, multithread = TRUE)
+
+# plot the errors
+plotErrors(err_forward_reads, nominalQ = TRUE)
+plotErrors(err_reverse_reads, nominalQ = TRUE)
+
+```
+
+
+# Infer ASVs on the forward and reverse seqs with DADA2
+```{r infer-ASVs}
+# run dada2 on the forward reads
+dada_F <- dada(filtered_F_reads, err = err_forward_reads, multithread =  TRUE)
+dada_F
+# run dada2 on the reverse reads
+dada_R <- dada(filtered_R_reads, err = err_reverse_reads, multithread =  TRUE)
+dada_R
+
+### Forward reads all have more than 80 sequence variants 
+### Some of the reverse reads only have less than 10 sequence variants
+
+```
+
+
+# Merge forward and reverse ASVs
+```{r merge-FandR-ASVs}
+
+# Attention: allows concatenation here
+merged_amplicons <- mergePairs(dada_F, filtered_F_reads,
+                               dada_R, filtered_R_reads,
+                               verbose = TRUE, justConcatenate = TRUE)
+
+### average merged pairs: 10,000
+### I will proceed with this list
+
+
+# Let's try "justConcateate = FALSE"
+merged_amplicons_noConcatenate <- mergePairs(dada_F, filtered_F_reads,
+                               dada_R, filtered_R_reads,
+                               verbose = TRUE, justConcatenate = FALSE)
+
+### average merged pairs: ~3
+
+
+### For continuous steps, I would try:
+### 1. assign taxonomy and species only using forward reads, 
+###    since this dada2 function does not accept "N"s in sequence,
+###    (there will be "N"s if allowing concatenation)
+### 2. proceed with concatenated amplicon sequences - merged_amplicons
+
+
+```
+
+
+
+
+
+
+
+
 
