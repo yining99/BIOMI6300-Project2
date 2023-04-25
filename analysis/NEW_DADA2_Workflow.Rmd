@@ -1,0 +1,79 @@
+---
+title: "New_DADA2_Workflow"
+author: "Yining Sun"
+date: "2023-04-25"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Let's strat! Set workdir, source code and load packages!
+```{r prep-to-start}
+# be in the right place
+setwd("/local/workdir/ys636/BIOMI6300-Project2")
+
+# source functions.R
+source("/local/workdir/ys636/BIOMI6300-Project2/code/functions.R")
+
+# load packages with pacman
+pacman::p_load(dada2, tidyverse, phyloseq, patchwork, Biostrings, install = FALSE)
+
+# check dada2 version
+packageVersion("dada2")
+```
+
+
+
+# Set path
+```{r set-path}
+
+# set paths for meat and dairy folders of gzipped files
+path <- ("/local/workdir/ys636/BIOMI6300-Project2/data")
+
+# check path
+list.files(path)
+
+```
+
+# Create variables for forward and reverse reads
+```{r F-and-R-variables}
+#R1 is forward, R2 is reverse
+# F and R variables
+F_reads <- sort(list.files(path, pattern = "_1.fastq",
+                                 full.names = TRUE))
+
+R_reads <- sort(list.files(path, pattern = "_2.fastq",
+                                 full.names = TRUE))
+
+```
+
+# Quality plot of raw reads
+```{r QualPlot-untrimmed}
+# show the quality of each base on the reads of all the 8 samples in both groups
+
+## Forward
+F_Qual_plot <- plotQualityProfile(F_reads[1:4])
+F_Qual_plot                     ### The first 260 bases had quality scores over 30
+## Reverse
+R_Qual_plot <- plotQualityProfile(R_reads[1:4])
+R_Qual_plot                      ### The first 200ish bases had quality scores over 30
+
+```
+
+
+# Modify file names for the forward and reverse filtered reads
+```{r variables-trimmed-reads}
+
+# Create characters for trimmed reads 
+sample <- scan(file = "/local/workdir/ys636/BIOMI6300-Project2/data/name.txt", what = "character")
+sample
+
+# create variables to hold file names
+filtered_F_reads <- file.path(path, "filtered", paste0(sample, "_1_filtered.fastq"))
+filtered_R_reads <- file.path(path, "filtered", paste0(sample, "_2_filtered.fastq"))
+
+```
+
+
+
+

@@ -357,7 +357,7 @@ track_dairy
 
 
 
-# generate a plot to track the reads through our DADA2 pipeline
+# Generate a plot to track the reads through our DADA2 pipeline
 ```{r track-plot}
 # Meat group
 track_meat %>%
@@ -396,5 +396,25 @@ track_dairy %>%
         axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
         
 ```
+
+
+# Assign taxonomy
+```{r assign-tax}
+
+# Meat group
+taxa_meat <- assignTaxonomy(seqtab_nochim_meat, "/workdir/in_class_data/taxonomy/silva_nr99_v138.1_train_set.fa.gz", multithread=FALSE)
+
+# the next line took 3 minutes 
+taxa_meat <- addSpecies(taxa_meat, "/workdir/in_class_data/taxonomy/silva_species_assignment_v138.1.fa.gz")
+
+### dada2 
+
+# Inspect the taxonomy 
+taxa_print <- taxa # Removing sequence rownames for display only
+rownames(taxa_print) <- NULL
+View(taxa_print)
+```
+
+
 
 
