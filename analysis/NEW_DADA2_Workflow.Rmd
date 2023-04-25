@@ -75,5 +75,31 @@ filtered_R_reads <- file.path(path, "filtered", paste0(sample, "_2_filtered.fast
 ```
 
 
+# Filter and trim the raw reads!!
+```{r filter-and-trim}
+
+filtered_out <- filterAndTrim(F_reads, filtered_F_reads, 
+                              R_reads, filtered_R_reads,
+                              truncLen = 0, trimRight = 100,
+                              maxN = 0, maxEE = c(1,1), truncQ = 2, 
+                              rm.phix = TRUE, compress = TRUE, 
+                              multithread = TRUE)
+## kept the first 200 bases in forward reads and the first 200 bases in reverse reads
+
+```
+
+
+# Plot the quality of filtered and trimmed reads for both groups
+```{r QualPlot-trim}
+
+## forward
+filtered_F_Qual_plot <- plotQualityProfile(filtered_F_reads[1:4])
+filtered_F_Qual_plot  
+## reverse
+filtered_R_Qual_plot <- plotQualityProfile(filtered_R_reads[1:4])
+filtered_R_Qual_plot
+
+```
+
 
 
