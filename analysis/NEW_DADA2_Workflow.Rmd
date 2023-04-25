@@ -213,4 +213,32 @@ frac_removed <- (1-chim_check)*100 ### 41.73903% of counts were chimeras and rem
 ```
 
 
+# Track the sequences through the pipeline
+```{r seq-track}
 
+# generate a function to identify number seqs
+getN <- function(x) sum(getUniques(x))
+
+# make the table to check the seqs
+track <- cbind(filtered_out,
+               sapply(dada_F, getN),
+               sapply(dada_R, getN),
+               sapply(merged_amplicons, getN),
+               rowSums(seqtab_nochim))
+
+head(track)
+
+# change column names
+colnames(track) <- c("input", "filtered", "denoisedF", "denoisedR", "merged", "nochim")
+
+head(track)
+
+rownames(track) <- sample
+
+track
+
+
+### Merged amplicon data look good so far!
+
+
+```
