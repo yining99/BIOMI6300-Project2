@@ -182,10 +182,22 @@ merged_amplicons_noConcatenate <- mergePairs(dada_F, filtered_F_reads,
 ```
 
 
+# Generate count tables
+```{r count-tab}
+
+seqtab <- makeSequenceTable(merged_amplicons)
+class(seqtab)      ### "matrix" "array"
+typeof(seqtab)     ### "integer"
+dim(seqtab)        ### 16 rows, 45935 columns
+View(seqtab)       ### ASV clusters existed in specific samples
 
 
+# inspect the distribution of sequence lengths of all ASVs in dataset
+table(nchar(getSequences(seqtab))) 
+### 408  409  410  411  412
+### 183  74 13434 28739 3505
 
-
+```
 
 
 
