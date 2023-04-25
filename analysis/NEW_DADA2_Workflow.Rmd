@@ -102,4 +102,19 @@ filtered_R_Qual_plot
 ```
 
 
+# Backup plan: make a workdir for filtered F reads only!
+```{r filter-F}
+# make a workdir called "filtered_F"
+filtered_F_reads_only <- file.path(path, "filtered_F", paste0(sample, "_1_filtered.fastq"))
+
+# filter and trim F reads
+filtered_out_F <- filterAndTrim(F_reads, filtered_F_reads_only, 
+                              truncLen = 0, trimRight = 40, 
+                              # since only trimming forward reads, I can only trim right 40 bases.
+                              maxN = 0, maxEE = 1, truncQ = 2, 
+                              rm.phix = TRUE, compress = TRUE, 
+                              multithread = TRUE)
+
+
+```
 
