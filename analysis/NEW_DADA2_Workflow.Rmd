@@ -330,7 +330,46 @@ track_F %>%
 
 
 ### The forward reads showed the same trends as the pipeline proceeds
-### Decided to go back to merged amplicons for later analysis
+### Continue to assign taxa and species to see if which type of data work better.
 
 ```
+
+
+# Assign taxonomy to merged pairs
+```{r assign-tax}
+
+taxa <- assignTaxonomy(seqtab_nochim, "/workdir/in_class_data/taxonomy/silva_nr99_v138.1_train_set.fa.gz", multithread=FALSE)
+
+
+# addSpecies() does not accept "N"s
+# taxa <- addSpecies(taxa, "/workdir/in_class_data/taxonomy/silva_species_assignment_v138.1.fa.gz")
+
+
+# Inspect the taxonomy 
+taxa_print <- taxa # Removing sequence rownames for display only
+rownames(taxa_print) <- NULL
+View(taxa_print)
+```
+
+
+# Assign taxonomy to forward reads
+```{r assign-tax-F}
+
+taxa_F <- assignTaxonomy(seqtab_nochim_F, "/workdir/in_class_data/taxonomy/silva_nr99_v138.1_train_set.fa.gz", multithread=FALSE)
+
+
+taxa_F <- addSpecies(taxa_F, "/workdir/in_class_data/taxonomy/silva_species_assignment_v138.1.fa.gz")
+
+
+# Inspect the taxonomy 
+taxa_F_print <- taxa_F # Removing sequence rownames for display only
+rownames(taxa_F_print) <- NULL
+View(taxa_F_print)
+
+### In the "Species" column, there are all "NA", although there was no error when executing the function.
+### Will skip "addSpecies" and proceed with merged pairs.
+
+```
+
+
 
