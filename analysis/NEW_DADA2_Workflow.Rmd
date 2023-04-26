@@ -469,6 +469,29 @@ write.table(asv_tax, "data/ASV_taxonomy.tsv", sep = "\t", quote = FALSE, col.nam
 ```
 
 
+## 3. metadata
+```{r metadata-prep}
+# read in metadata
+metadata <-
+  read.csv("/local/workdir/ys636/BIOMI6300-Project2/data/metadata2.csv") %>%
+  mutate(X = NULL)
+  # fix typo
+  #mutate(Sample_or_Control = droplevels(fct_recode(Sample_or_Control,"True Sample" = " True Sample")))
+
+str(metadata)
+
+# add names to rownames for phyloseq happiness
+rownames(metadata) <- metadata$names
+```
 
 
+## handoff to phyloseq
+```{r phyloseq-handoff}
+raw_phyloseq <- phyloseq(otu_table(asv_tab, taxa_are_rows =  TRUE),
+                         sample_data(metadata),
+                         tax_table(as.matrix(asv_tax)))
+raw_phyloseq
+
+save(raw_phyloseq, file = paste0("data/raw_physeq.RData"))
+```
 
