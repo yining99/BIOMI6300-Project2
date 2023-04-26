@@ -141,16 +141,13 @@ obs_rich_df <-
   make_MA_metadata()
  
 
-obs_rich_df %>%
-  ggplot(aes(x = source, y = qD, color = source)) +
-  geom_jitter(size = 2.5) +
-  geom_boxplot(aes(fill = source, alpha = 0.3, outlier.shape = NA)) +
-  # scale_color_manual(values = station_colors) +
-  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1)) +
-  stat_kruskal_test()
+ggboxplot(obs_rich_df, x = "source", y = "qD", 
+          color = "source", palette = c("#00AFBB", "#E7B800"),
+          ylab = "qD", xlab = "source",
+          )
 
 
-
+# look into the rarefaction diversity values and check them
 
 rf_rich_df <-
   iNEXT_data$iNextEst$size_based %>%
@@ -160,16 +157,27 @@ rf_rich_df <-
   dplyr::rename(names = Assemblage) %>%
   make_MA_metadata()
 
+ggboxplot(rf_rich_df, x = "source", y = "qD", 
+          color = "source", palette = c("#00AFBB", "#E7B800"),
+          ylab = "qD", xlab = "source",
+          )
 
-rf_rich_df %>%
-  ggplot(aes(x = source, y = qD, color = source)) +
-  geom_jitter(size = 2.5) +
-  geom_boxplot(aes(fill = source, alpha = 0.3, outlier.shape = NA)) +
-  # scale_color_manual(values = station_colors) +
-  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1)) +
-  stat_kruskal_test()
+
+
+# Wilcoxon test for observed richness
+res1 <- wilcox.test(qD ~ source, data = obs_rich_df,
+                   exact = FALSE)
+res1
+
+# Wilcoxon test for rarefied richness
+res2 <- wilcox.test(qD ~ source, data = rf_rich_df,
+                   exact = FALSE)
+res2
 
 ```
 
 
+```{r}
+
+```
 
