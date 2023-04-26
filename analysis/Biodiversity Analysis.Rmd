@@ -68,11 +68,17 @@ typeof(iNEXT_data) # list
 # make workable df
 div_iNEXT_df <-
   iNEXT_data$AsyEst %>%
-  dplyr::rename(names = Assemblage) 
+  dplyr::rename(names = Assemblage)
+  
+div_iNEXT_df$source <- substr(div_iNEXT_df$names, 13,16)
 
-head(div_iNEXT_df)
+
+View(div_iNEXT_df)
 
 ### This latest df already has "source" column,
 ### everything looks good so far!
   
 ```
+
+
+
