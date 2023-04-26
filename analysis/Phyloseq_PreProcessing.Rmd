@@ -48,4 +48,40 @@ View(data.frame(sample_data(raw_phyloseq)))
 ```
 
 
+# Remove unnecessary taxa
+```{r rm-ASVs}
+
+# 1. Mitochondria ASVs
+# 2. Chloroplast ASVs
+# Note: since I don't have controls or mock community, I will skip removing this two types of ASV data.
+
+test_physeq <-
+  raw_phyloseq %>% 
+   ## remove the mitochondria ASVs
+  subset_taxa(Family != "Mitochondria") %>%
+   ## remove the chloroplast ASVs
+  subset_taxa(Order != "Chloroplast")
+
+noMitoChloroCJMock_physeq <- 
+  raw_phyloseq %>%
+  subset_taxa(Family != "Mitochondria" | is.na(Family)) %>%
+  subset_taxa(Order != "Chloroplast" | is.na(Order)) %>%
+  prune_samples((sample_names(.)) %!in% c("CJ-V08-P", "MockZyomPos"), .) %>%
+  # now we will remove any ASVs of count 0
+  prune_taxa(taxa_sums(.) > 0, .)
+  
+
+noMitoChloroCJMock_physeq
+
+
+# how many taxa have we removed so far?
+num_ASVs_rm <- ntaxa(raw_phyloseq) - ntaxa(noMitoChloroCJMock_physeq) ## 0
+# proportion
+prop_ASVs_rm <- ntaxa(raw_phyloseq)/ntaxa(noMitoChloroCJMock_physeq)  ## 1
+
+### after this step, there is no taxa removed
+### which means there is no mitochondria or chloroplast ASVs in the samples
+
+```
+
 
