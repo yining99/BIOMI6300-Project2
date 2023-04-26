@@ -1,0 +1,51 @@
+---
+title: "Phyloseq_PreProcessing"
+author: "Yining Sun"
+date: "`r format(Sys.time(), '%B %d %Y')`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    theme: united
+    highlight: tango
+editor_options: 
+  chunk_output_type: console
+---
+
+# Prepare to start the preprocessing
+```{r start-prep}
+#Be in the right place
+setwd("/local/workdir/ys636/BIOMI6300-Project2")
+
+# load packages
+pacman::p_load(tidyverse, phyloseq, install = FALSE)
+
+# source functions
+source("/local/workdir/ys636/BIOMI6300-Project2/code/functions.R")
+source("/local/workdir/ys636/BIOMI6300-Project2/code/colors_and_shapes.R")
+
+```
+
+
+# Load the data
+```{r load-data}
+
+# load in the raw_physeq data from DADA2 Practice.Rmd
+load("/local/workdir/ys636/BIOMI6300-Project2/data/raw_physeq.RData")
+
+# Take a look at the S4 object
+raw_phyloseq
+
+# Tell us about your phyloseq
+str(raw_phyloseq)
+typeof(raw_phyloseq)
+
+View(raw_phyloseq@otu_table)
+View(raw_phyloseq@tax_table)
+View(data.frame(sample_data(raw_phyloseq)))
+
+```
+
+
+
