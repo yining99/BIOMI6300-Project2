@@ -1,10 +1,17 @@
 ---
-title: "New_DADA2_Workflow"
+title: "Biodiversity Analysis Step1: DADA2 Workflow"
 author: "Yining Sun"
-date: "2023-04-25"
-output: html_document
+date: "`r format(Sys.time(), '%B %d %Y')`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    theme: united
+    highlight: tango
 editor_options: 
   chunk_output_type: console
+
 ---
 
 # Let's strat! Set workdir, source code and load packages!
@@ -183,7 +190,7 @@ merged_amplicons_noConcatenate <- mergePairs(dada_F, filtered_F_reads,
 
 
 # Generate count tables
-```{r count-tab}
+```{r count-table}
 
 seqtab <- makeSequenceTable(merged_amplicons)
 class(seqtab)      ### "matrix" "array"
