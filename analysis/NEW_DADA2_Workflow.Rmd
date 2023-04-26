@@ -372,4 +372,60 @@ View(taxa_F_print)
 ```
 
 
+# Skipped evaluating accuracyas there was no mock community in my samples
+
+
+# Prepare the data for export
+
+## 1. ASV Table
+```{r prepare-ASV-table}
+# prep the asv table
+samples_out <- rownames(seqtab_nochim)
+
+# pull out sample names from the file name
+sample_names_reformatted <- sapply(strsplit(samples_out, split = "_1"), `[`, 1)
+
+# replace the names in our seqtable
+rownames(seqtab_nochim) <- sample_names_reformatted
+
+View(seqtab_nochim)
+
+### intuition check
+stopifnot(rownames(seqtab_nochim) == sample_names_reformatted)
+
+################ modify the ASV names and then save a fasta file
+# give headers more manageable names
+# first pull the ASV sequences
+asv_seqs <- colnames(seqtab_nochim)
+
+# make headers for our seq fasta file, which will be our ASV Names
+asv_headers <- vector(dim(seqtab_nochim)[2], mode = "character")
+
+# loop through vector and fill it in with ASV names
+for (i in 1:dim(seqtab_nochim)[2]) {
+  asv_headers[i] <- paste(">ASV", i, sep = "_")
+}
+
+# intuition check
+asv_headers
+
+
+### rename ASVs in table and then write out out ASV fasta file
+asv_tab <- t(seqtab_nochim)
+View(asv_tab)
+
+# rename ASVs
+row.names(asv_tab) <- sub(">", "", asv_headers)
+View(asv_tab)
+
+# write the count table to a file
+write.table(asv_tab, "./data/ASV_counts.tsv", sep = "\t", quote = FALSE, col.names = NA)
+
+# write out the fasta file for reference later on for what seq matches what ASV
+asv_fasta <- c(rbind(asv_headers, asv_seqs))
+
+# save to a file
+write(asv_fasta, "data/ASV.fasta")
+
+```
 
