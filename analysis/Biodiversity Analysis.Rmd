@@ -177,7 +177,7 @@ res2
 ```
 
 
-```{r}
-
+# Session information
+```{r session_info}
+devtools::session_info()
 ```
-
