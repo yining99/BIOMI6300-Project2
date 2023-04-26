@@ -14,11 +14,20 @@
 '%!in%' <- function(x,y)!('%in%'(x,y))
 
 
+make_MA_source <- function(dataframe){ 
+  # Create new columnes based on information in the sample name
+  dataframe$source <- substr(dataframe$source, 1,5)
+}
+
+
 # 2. make_MA_metadata, which wil build metadata from sample names. 
 
 ## This function adds the categorical metadata to a dataframe based on the sample name
 # IMPORTANT!!!  The dataframe MUST have column named "names"
+
 make_MA_metadata <- function(dataframe){ 
+  
+  
   
   # Create new columnes based on information in the sample name
   dataframe$year <- substr(dataframe$names, 1,4) # 1-4th letters = year sampled
