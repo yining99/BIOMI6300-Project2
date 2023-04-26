@@ -125,3 +125,28 @@ ggiNEXT(iNEXT_data, type = 2) +
 ```
 
 
+# Make boxplot of diversity
+```{r boxplot-div}
+
+iNEXT_data$AsyEst %>%
+  head()
+
+# look into the observed diversity values and check them
+obs_rich_df <-
+  iNEXT_data$iNextEst$size_based %>%
+  # extract the richness from the data
+  dplyr::filter(Order.q == 0) %>%
+  dplyr::filter(Method == "Observed") %>%
+  dplyr::rename(names = Assemblage) %>%
+  make_MA_metadata()
+ 
+
+obs_rich_df %>%
+  # dplyr::filter(source == "dair") %>%
+  ggplot(aes(x = source, y = qD, color = station)) +
+  geom_jitter(size = 2.5) +
+  geom_boxplot(aes(fill = source, alpha = 0.5, outlier.shape = NA) +
+  scale_fill_manual(values = station_colors) +
+  scale_color_manual(values = station_colors) +
+  theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust = 1)) +
+  stat_kruskal_test()
