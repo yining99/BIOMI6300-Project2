@@ -430,3 +430,45 @@ write(asv_fasta, "data/ASV.fasta")
 
 ```
 
+
+
+## 2. taxonomy table
+```{r prep-taxonomy-tab}
+View(taxa)
+
+#### prep taxonomy table
+# add ASV seqs from the rownames to a column
+new_tax_tab <- taxa %>%
+  as.data.frame() %>%
+  rownames_to_column(var = "ASVseqs")
+head(new_tax_tab)
+
+# intuition check
+stopifnot(new_tax_tab$ASVseqs == colnames(seqtab_nochim))
+
+# add the ASV names
+rownames(new_tax_tab) <- rownames(asv_tab)
+View(new_tax_tab)
+
+### final prep of tax table, add new column with ASV names
+asv_tax <-
+  new_tax_tab %>%
+  # add rownames from count table for phyloseq handoff
+  mutate(ASV = rownames(asv_tab)) %>%
+  # resort the columns with select
+  dplyr::select(Kingdom, Phylum, Class, Order, Family, Genus, ASV, ASVseqs)
+
+View(asv_tax)
+
+# intuition check 
+stopifnot(asv_tax$ASV == rownames(asv_tax), rownames(asv_tax) == rownames(asv_tab))
+
+# write the table
+write.table(asv_tax, "data/ASV_taxonomy.tsv", sep = "\t", quote = FALSE, col.names = NA)
+
+```
+
+
+
+
+
