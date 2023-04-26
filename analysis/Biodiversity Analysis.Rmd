@@ -82,3 +82,38 @@ View(div_iNEXT_df)
 
 
 
+# plot diversity in samples
+```{r}
+
+###
+# Prepare data to color the figure for iNEXT
+dat <- colnames(iNEXT_input_df) %>%    
+  data.frame() 
+
+colnames(dat)[1] <- "names"     
+
+sub_metadata <- dat %>% 
+  make_MA2_metadata()
+
+# Add the colors for the plotting!
+dat_iNEXT <- dat %>%      
+  left_join(sub_metadata, by = "names") %>%    
+  mutate(fraction_color = ifelse(source == "dair", "goldenrod1",                                  ifelse(source == "meat", "firebrick3",         "gray")))
+
+
+# Now plot it all :) 
+# Plot the rarefaction/extrapolation curve (type = 1)
+rarefaction_fixed_plot <-   ggiNEXT(iNEXT_data, type=1, facet.var="Order.q") +   
+  facet_wrap(~Order.q, scales="fixed") +  
+  scale_color_manual(values = dat_iNEXT$fraction_color,  guide = FALSE) +  
+  scale_fill_manual(values = dat_iNEXT$fraction_color, guide = FALSE) +  
+  theme(legend.position = "none") +   
+  labs(x = "Number of Sequences")
+
+rarefaction_fixed_plot
+
+```
+
+
+
+
