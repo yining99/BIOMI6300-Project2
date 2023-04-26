@@ -40,4 +40,39 @@ noMitoChloroCJMock_physeq
 ```
 
 
+# Run biodiversity analysis
+## work with the iNEXT packages
+```{r iNEXT-div-estimation}
+# prepare data for iNEXT
+iNEXT_input_df <-
+  noMitoChloroCJMock_physeq %>%
+  otu_table() %>%
+  data.frame()
 
+# run iNEXT on the data
+# calculate diversity with iNEXT
+set.seed(0402)
+
+
+iNEXT_data <- iNEXT(iNEXT_input_df, q = c(0, 1, 2), datatype = "abundance")
+save(iNEXT_data, file = "/local/workdir/ys636/BIOMI6300-Project2/data/iNEXT_biodiv_analysis.RData")
+
+
+
+load("/local/workdir/ys636/BIOMI6300-Project2/data/iNEXT_biodiv_analysis.RData")
+# note: the obkect is called "iNEXT_data"
+str(iNEXT_data)
+typeof(iNEXT_data) # list
+
+
+# make workable df
+div_iNEXT_df <-
+  iNEXT_data$AsyEst %>%
+  dplyr::rename(names = Assemblage) 
+
+head(div_iNEXT_df)
+
+### This latest df already has "source" column,
+### everything looks good so far!
+  
+```
