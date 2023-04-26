@@ -26,44 +26,15 @@ make_MA_source <- function(dataframe){
 # IMPORTANT!!!  The dataframe MUST have column named "names"
 
 make_MA_metadata <- function(dataframe){ 
+  # Create new columnes based on information in the sample name
+  dataframe$source <- substr(dataframe$names, 13,16)
   
   
   
   # Create new columnes based on information in the sample name
-  dataframe$year <- substr(dataframe$names, 1,4) # 1-4th letters = year sampled
-  dataframe$month <- substr(dataframe$names, 5,6) # 5-6th letter = month sampled
-  dataframe$day <- substr(dataframe$names, 7,8) # 7-8th letter = day sampled
-  
-  dataframe$project <- substr(dataframe$names, 10,11) # 10-11th letter = project
-  
-  dataframe$station <- substr(dataframe$names,13,14) # 13-14 station info
-  dataframe$depth <- substr(dataframe$names, 15, 15) # 15th = where in water column sample was taken
-  dataframe$replicate <- substr(dataframe$names, 16, 16) # 16th = Which sample replicate 
-  dataframe$fraction <- substr(dataframe$names, 17,17) # 17th = filter fraction (e.g. particle, whole, free)
  
-  # Fraction
-  dataframe$fraction <- ifelse(dataframe$fraction == "F", "Free", 
-                               ifelse(dataframe$fraction == "P", "Particle", 
-                                      ifelse(dataframe$fraction == "W","Whole", "Control")))
-  dataframe$fraction <- as.factor(dataframe$fraction)
-  dataframe$fraction <- factor(dataframe$fraction,levels = c("Particle", "Free", "Whole", "Control"))
+ 
   
-  # Month
-  dataframe$month <- ifelse(dataframe$month == "06", "June", 
-                               ifelse(dataframe$month == "10", "October", "Control"))
-  dataframe$month <- as.factor(dataframe$month)
-  dataframe$month <- factor(dataframe$month,levels = c("June", "October", "Control"))
-  
-  # Station
-  dataframe$station <- ifelse(dataframe$station == "AB", "Aransas Bay", 
-                               ifelse(dataframe$station == "CE", "Copano East", 
-                                      ifelse(dataframe$station == "CW","Copano West", 
-                                             ifelse(dataframe$station == "MB", "Mesquite Bay",
-                                                    ifelse(dataframe$station == "SC", "Shipping Channel",
-                                                           "Control")))))
-  dataframe$station <- as.factor(dataframe$station)
-  dataframe$station <- factor(dataframe$station,levels = c("Copano West", "Copano East", "Mesquite Bay", 
-                                                           "Aransas Bay", "Shipping Channel", "Control"))
   
   # Return the data
   return(dataframe)

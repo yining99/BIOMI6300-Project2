@@ -17,11 +17,16 @@ Study of gut microbiota in formula-fed infants consuming meat vs. dairy-based co
 
 ### Hypotheses to be tested
 
-1.  The gut microbiota of formula-fed infants having meat as complementary food is different than that of those having dairy-based complementary food.
-    -   species richness between two groups
-    -   16s rRNA gene abundance
-    -   beta diversity
+⭐️The gut microbiota of formula-fed infants having meat as complementary food is different than that of those having dairy-based complementary food.
+
+-   species richness between two groups
+-   16s rRNA gene abundance
+-   beta diversity
 
 ## What are included in this repo:
 
 📂`data` has all the 16s rRNA sequencing data in fastq.gz format.
+
+📂`figures` includes all the figures generated through the whole pipeline.
+
+📂`analysis` covers all the RMarkdown files with codes used to process raw reads, phyloseq processing and diversity analysis
