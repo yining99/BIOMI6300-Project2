@@ -142,11 +142,34 @@ obs_rich_df <-
  
 
 obs_rich_df %>%
-  # dplyr::filter(source == "dair") %>%
-  ggplot(aes(x = source, y = qD, color = station)) +
+  ggplot(aes(x = source, y = qD, color = source)) +
   geom_jitter(size = 2.5) +
-  geom_boxplot(aes(fill = source, alpha = 0.5, outlier.shape = NA) +
-  scale_fill_manual(values = station_colors) +
-  scale_color_manual(values = station_colors) +
-  theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust = 1)) +
+  geom_boxplot(aes(fill = source, alpha = 0.3, outlier.shape = NA)) +
+  # scale_color_manual(values = station_colors) +
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1)) +
   stat_kruskal_test()
+
+
+
+
+rf_rich_df <-
+  iNEXT_data$iNextEst$size_based %>%
+  # extract the richness from the data
+  dplyr::filter(Order.q == 0) %>%
+  dplyr::filter(Method == "Rarefaction") %>%
+  dplyr::rename(names = Assemblage) %>%
+  make_MA_metadata()
+
+
+rf_rich_df %>%
+  ggplot(aes(x = source, y = qD, color = source)) +
+  geom_jitter(size = 2.5) +
+  geom_boxplot(aes(fill = source, alpha = 0.3, outlier.shape = NA)) +
+  # scale_color_manual(values = station_colors) +
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1)) +
+  stat_kruskal_test()
+
+```
+
+
+
