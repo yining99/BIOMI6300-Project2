@@ -427,5 +427,6 @@ asv_fasta <- c(rbind(asv_headers, asv_seqs))
 # save to a file
 write(asv_fasta, "data/ASV.fasta")
 
+
 ```
 
