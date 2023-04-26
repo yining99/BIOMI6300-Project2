@@ -1,0 +1,43 @@
+---
+title: "Diversity/Compositional Analysis"
+author: "Yining Sun"
+date: "`r format(Sys.time(), '%B %d %Y')`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    theme: united
+    highlight: tango
+editor_options: 
+  chunk_output_type: console
+---
+
+# Load packages
+```{r start}
+
+# be in the right place
+setwd("/local/workdir/ys636/BIOMI6300-Project2")
+
+# efficiently load packages
+pacman::p_load(phyloseq, iNEXT, ggpubr, tidyverse, install = FALSE)
+
+# load functions and color preferences
+source("/local/workdir/ys636/BIOMI6300-Project2/code/functions.R")
+source("/local/workdir/ys636/BIOMI6300-Project2/code/colors_and_shapes.R")
+```
+
+
+# Load data
+```{r load-data}
+load("/local/workdir/ys636/BIOMI6300-Project2/data/preprocessed_physeq.RData")
+
+noMitoChloroCJMock_physeq
+
+### I gave the name of "preprocessed_physeq" to the S4 object called "noMitoChloroCJMock_physeq".
+### So here I should call noMitoChloroCJMock_physeq instead of preprocessed_physeq.
+
+```
+
+
+
