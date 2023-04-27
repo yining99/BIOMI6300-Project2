@@ -1,33 +1,22 @@
-# Analysis Folder
+# Figures Folder
 
 ## About this folder:
 
-In this folder, you will find all the RMarkdown files I created for the whole biodiversity analysis pipeline, from raw reads filtering and trimming, to unnecessary taxa removal and eventual biodiversity analysis.
+In this folder, you will find all the graphs/plots generated throughout the whole pipeline. The whole pipeline is divided into THREE general steps as described in the README.md in the parent folder. Each folder represents different general steps and has all the plots generated in the corresponding step.
 
-### 📃`DADA2 Workflow.Rmd` inclues codes:
+### 📂`DADA2 Workflow`:
 
-**Main package used for this workflow: 📦`DADA2`**
+-   Quality plots of reads before and after DADA2.filterAndTrim
+-   Error plots generated after learning errors using filtered reads
+-   Merged amplicon track plot, form which you can see the changes of each sample's reads as the workflow proceeds (Note: please refer to "NEW_QualPlot" for quality plots of the reads used for this whole analysis pipeline)
 
--   calculating and plotting the quality of sequences before and after trimming
--   training error model
--   inferring ASVs (Amplicon Sequence Variants) to filtered reads
--   merging pairs using forward and reverse reads
--   generating count tables
--   removing chimeras/bimeras
--   tracking sequences
--   assigning taxonomy to merged amplicons
+### 📂`Phyloseq_PreProcessing`:
 
-### 📃`Phyloseq_Prepocessing.Rmd` inclues codes:
+-   Density plots of total sequences for each smaples of both dairy group and meat group
+-   Histogram that represents the number of samples of each identified sequences
 
-**Main package used for this workflow: 📦`Phyloseq`**
+### 📂`Biodiversity Analysis`:
 
--   removing unnecessary taxa, including Mitochondria and Chloroplast ASVs (no control/mock community in the samples)
--   evaluating sequence depth
--   removing samples with too few reads
-
-### 📃`Biodiversity Analysis` inclues codes:
-
-**Main package used for this workflow: 📦`iNEXT`**
-
--   plotting completeness curve indicating sample coverage based on samples
--   plotting observed species richness in two source groups (dairy group and meat group)
+-   Completeness curve that shows the completeness of each sample
+-   Rarefaction curve that indicate how species diversity would change as the #s of sequences increase
+- Boxplots of observed species richness across source groups (meat and dairy)
