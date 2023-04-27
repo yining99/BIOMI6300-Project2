@@ -4,20 +4,27 @@
 
 In this folder, you will find all the RMarkdown files I created for the whole biodiversity analysis pipeline, from raw reads filtering and trimming, to unnecessary taxa removal and eventual biodiversity analysis.
 
-### 📃`DADA2 Workflow.Rmd` inclues codes:
+### 📃`DADA2 Workflow.Rmd`:
 
 **Main package used for this workflow: 📦`DADA2`**
 
 -   calculating and plotting the quality of sequences before and after trimming
+
 -   training error model
+
 -   inferring ASVs (Amplicon Sequence Variants) to filtered reads
+
 -   merging pairs using forward and reverse reads
+
 -   generating count tables
+
 -   removing chimeras/bimeras
+
 -   tracking sequences
+
 -   assigning taxonomy to merged amplicons
 
-### 📃`Phyloseq_Prepocessing.Rmd` inclues codes:
+### 📃`Phyloseq_Prepocessing.Rmd`:
 
 **Main package used for this workflow: 📦`Phyloseq`**
 
@@ -25,7 +32,7 @@ In this folder, you will find all the RMarkdown files I created for the whole bi
 -   evaluating sequence depth
 -   removing samples with too few reads
 
-### 📃`Biodiversity Analysis` inclues codes:
+### 📃`Biodiversity Analysis`:
 
 **Main package used for this workflow: 📦`iNEXT`**
 
