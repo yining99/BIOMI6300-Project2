@@ -1,6 +1,17 @@
 # This file indicates that colors and shapes of metadata across various
 # let's keep the visualizations consistent! :) 
 
+source_shapes <- c(
+  "dairy" = 23,
+  "meat" = 21
+)
+
+
+source_colors <- c(
+  "dairy" = "#00AFBB",
+  "meat" = "#E7B800"
+)
+
 fraction_shapes <- c(
   "Particle" = 23, 
   "Free" = 21,
